@@ -4,7 +4,7 @@ import ChatMessage from "./modules/ChatMessage.js";
 const socket = io();
 
 // this is data deconstucting. go look it up on MDN
-function setUserId(sID) {
+function setUserId({sID}) {
     //debugger;
     console.log(sID);
     vm.socketID = sID;
