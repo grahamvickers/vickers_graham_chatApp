@@ -1,4 +1,4 @@
-# Graham Vickers Web Development Portfolio
+# Chat App Assignment
 
 This is my web chatting app that I designed and built, this is alson in conjunction with my program Interactive Media Design at Fanshawe College. 
 
