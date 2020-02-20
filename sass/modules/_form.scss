@@ -1,0 +1,51 @@
+.formPage{
+    margin-top: 60px;
+    div{
+        margin-bottom: 40px;
+        h2{
+            text-align: center;
+            color: $button-color;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            input{
+                border-radius: 20px; 
+                border-style: none;
+                border: 1px solid $button-color;
+                padding: 10px;
+                margin: 10px;
+                font-size: 14px;
+                width: 300px;
+                text-decoration: none;
+            }
+            button{
+                border-radius: 20px; 
+                border-style: none;
+                background-color: $button-color;
+                padding: 10px;
+                margin: 10px;
+                font-size: 14px;
+                width: 120px;
+                text-decoration: none;
+                color: white;
+            }
+        }
+    }
+}
+
+
+.route{
+    font-family:'Oswald', sans-serif;
+    text-decoration: none;
+    color: #3f3f3f;
+    margin-top: 40px;
+    margin: 20px;
+}
+
+.route:hover{
+    text-decoration: none;
+    color: $button-color;
+    transition: .2s ease;
+}
