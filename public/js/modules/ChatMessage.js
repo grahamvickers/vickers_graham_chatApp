@@ -13,7 +13,7 @@ export default {
 
     data: function() {
         return { 
-            message: "hello from the template", 
+            message: "template is running", 
             matchedID: this.$parent.socketID == this.msg.id
         };
     }
