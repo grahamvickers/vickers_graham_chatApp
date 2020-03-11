@@ -1,8 +1,9 @@
 var express = require('express');
 var app = express();
 
-//adding socket.io
-const io = require('socket.io')();
+// import the socket.io library
+const io = require('socket.io')(); 
+// instantiate the socket.io library right away with the () method -> makes it run
 
 const port = process.env.PORT || 3030;
 
@@ -17,22 +18,31 @@ const server = app.listen(port, () => {
     console.log(`app is running on port ${port}`);
 });
 
-//attach our chat server to our app
+// this is all of our socket.io messaging functionality
+
+// attach socket.io
 io.attach(server);
 
-io.on('connection', function(socket){ //socket it the connection
-    console.log('a user has connected');
-    socket.emit('connected', { sID: socket.id, message: "new connection" })
+io.on('connection', function(socket) {
+    console.log('user connected');
+    socket.emit('connected', { sID: `${socket.id}`, message: 'new connection'});
 
+    // listen for an incoming message from a user (socket refers to an individual user)
+    // msg is the incoming message from that user
     socket.on('chat_message', function(msg) {
-        console.log(msg); //lets see what the payload is from the client side 
+        console.log(msg);
 
-        //tell the connection manager (io) to send this message to everyone 
-        // anyone connected to our chat app will get this message (including the sender)
+        // when we get a new message, send it to everyone so they see it
+        // io is the switchboard operator, making sure everyone who's connected
+        // gets the messages
         io.emit('new_message', { id: socket.id, message: msg })
     })
 
+    // listen for a disconnect event
     socket.on('disconnect', function() {
-        console.log('a user has disconnected')
+        console.log('a user disconnected');
+
+        message = `${socket.id} has left the chat!`;
+        io.emit('user_disconnect', message);
     })
 })

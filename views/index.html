@@ -11,20 +11,20 @@
 <body>
 	<main id="app">
 		<section class="form-container">
-			<label for="nickname">Your Nickname (optional)</label>
+			<label for="nickname">Your Code Name <small>(optional)</small></label>
 			<input type="text" id="nickname" class="nickname" placeholder="What is your nickname?">
 
 			<form>
-				<label for="message">Something to say?</label>
-				<textarea v-model="message" class="message" type="text" autocomplete="off" id="textarea"></textarea>
+				<label for="message">Your Message</label>
+				<textarea v-model="message" class="message" type="text" autocomplete="off" id="textarea" placeholder="Let's solve this bug!"></textarea>
 				<input @click.prevent="dispatchMessage" type="submit">
 			</form>
 		</section>
 
 		<section class="messages">
-			<ul id="messages">
+			<ul id="messages" >
 				<!-- render a new message component for every message -->
-				<newmessage v-for="message in messages" :msg="message"></newmessage>
+				<newmessage :msg="message" v-for="message in messages"></newmessage>
 			</ul>
 		</section>
 	</main>

@@ -3,51 +3,59 @@ import ChatMessage from "./modules/ChatMessage.js";
 
 const socket = io();
 
-// this is data deconstucting. go look it up on MDN
-function setUserId({sID}) {
+function setUserId({sID, message}) {
     //debugger;
-    console.log(sID);
     vm.socketID = sID;
 }
 
-function showDisconnectMessage(){
-    console.log('a user disconnected');
+function runDisconnectMessage(packet) {
+    //debugger;
+    console.log(packet);
 }
 
-function appendMessage(message) {
-    vm.messages.push(message);
+function appendNewMessage(msg) {
+    // take the incoming message and push it into the Vue instance 
+    // into the messages array
+    vm.messages.push(msg);
 }
 
+// this is our main Vue instance
 const vm = new Vue({
     data: {
-        socketID: "",
+        socketID: "",      
+        messages: [],
         message: "",
-        nickname: "",
-        messages: []
+        nickName: ""
     },
 
     methods: {
-        //emit a message event to the server so that it can turn send this to anyone whos connected
         dispatchMessage() {
-            console.log('handle emit message');
+            // emit a message event and send the message to the server
+            console.log('handle send message');
 
-            //the double pip || is an "or" oporator
-            // if the value is set use it, else use
-            // whatever comes after the "or" operator
-            socket.emit('chat_message', {
+            socket.emit('chat_message', { 
                 content: this.message,
-                name: this.nickname || "anonymous"
+                name: this.nickName || "creeper"
+                // || is called a double pipe operator or an "or" operator
+                // if this.nickName is set, use it as the value
             })
 
-            this.message = ""
+            this.message = "";
         }
+
     },
 
     components: {
         newmessage: ChatMessage
+    },
+
+    mounted: function() {
+        console.log('mounted');
     }
 }).$mount("#app");
 
+
+// some event handling -> these events are coming from the server
 socket.addEventListener('connected', setUserId);
-socket.addEventListener('disconnect', showDisconnectMessage)
-socket.addEventListener('new_message', appendMessage)
+socket.addEventListener('user_disconnect', runDisconnectMessage);
+socket.addEventListener('new_message', appendNewMessage);
